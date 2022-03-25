@@ -1,6 +1,6 @@
 use text_colorizer::*;
 use std::env;
-
+use std::fs;
 fn parse_args() -> Arguments {
    let args: Vec<String> = env::args().skip(1).collect();
 
@@ -31,6 +31,23 @@ fn print_usage(){
     eprintln!("Usage: quickreplace <target> <replacement> <INPUT> <OUTPUT>");
 }
 fn main() {
-let args = parse_args();
-println!("{:?}", args)
+    let args = parse_args();
+
+    let data = match fs::read_to_string(&args.filename) {
+        Ok(rez) => rez,
+        Err(e) => {
+            eprintln!(" {} failed to read from file '{}': {:?}",
+                      "Error".red().bold(), args.filename, e );
+        }
+    };
+
+    match fs::write(&args.output,&data){
+        Ok(_) => {},
+        Err(e) => {
+            eprintln!("{} failed to write to file '{}': {:?}",
+                      "Error".red().bold(), args.filename, e );
+            std::process::exit(1);
+        }
+    }
+
 }
