@@ -36,8 +36,9 @@ fn main() {
     let data = match fs::read_to_string(&args.filename) {
         Ok(rez) => rez,
         Err(e) => {
-            eprintln!(" {} failed to read from file '{}': {:?}",
-                      "Error".red().bold(), args.filename, e );
+           eprintln!(" {} failed to read from file '{}': {:?}",
+                     "Error".red().bold(), args.filename, e );
+            std::process::exit(1);
         }
     };
 
