@@ -1,5 +1,6 @@
 use text_colorizer::*;
 use std::env;
+use std::error::Error;
 use std::fs;
 fn parse_args() -> Arguments {
    let args: Vec<String> = env::args().skip(1).collect();
